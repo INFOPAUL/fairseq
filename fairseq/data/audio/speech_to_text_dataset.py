@@ -265,9 +265,10 @@ class SpeechToTextDataset(FairseqDataset):
         return source
 
     def __getitem__(self, index: int) -> SpeechToTextDatasetItem:
-        source = self._get_source_audio(index)
-        source = self.pack_frames(source)
-
+        #source = self._get_source_audio(index)
+        #source = self.pack_frames(source)
+        source = torch.zeros(10000, 80)
+        
         target = None
         if self.tgt_texts is not None:
             tokenized = self.get_tokenized_tgt_text(index)

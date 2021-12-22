@@ -188,7 +188,7 @@ class HiFiGANVocoder(nn.Module):
     ) -> None:
         super().__init__()
         self.model = HiFiGANModel(model_cfg)
-        state_dict = torch.load(checkpoint_path)
+        state_dict = torch.load(checkpoint_path, map_location=torch.device('cpu'))
         self.model.load_state_dict(state_dict["generator"])
         if fp16:
             self.model.half()

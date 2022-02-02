@@ -308,7 +308,7 @@ class S2TTransformerEncoder(FairseqEncoder):
         else:
             self.layer_norm = None
 
-    def _forward(self, src_tokens, src_lengths, return_all_hiddens=False):
+    def _forwardAD(self, src_tokens, src_lengths, return_all_hiddens=False):
         x, input_lengths = self.subsample(src_tokens, src_lengths)
         x = self.embed_scale * x
 
@@ -341,11 +341,11 @@ class S2TTransformerEncoder(FairseqEncoder):
     def forward(self, src_tokens, src_lengths, return_all_hiddens=False):
         if self.num_updates < self.encoder_freezing_updates:
             with torch.no_grad():
-                x = self._forward(
+                x = self._forwardAD(
                     src_tokens, src_lengths, return_all_hiddens=return_all_hiddens
                 )
         else:
-            x = self._forward(
+            x = self._forwardAD(
                 src_tokens, src_lengths, return_all_hiddens=return_all_hiddens
             )
         return x
